@@ -1,0 +1,61 @@
+[gd_scene load_steps=8 format=3 uid="uid://dp78e4c0kpwyt"]
+
+[ext_resource type="Script" path="res://level_1.gd" id="1_5o3mm"]
+[ext_resource type="Texture2D" uid="uid://2ofbuku1oa1x" path="res://Assets/purple.png" id="1_ru5s6"]
+[ext_resource type="PackedScene" uid="uid://ogqehff3tunb" path="res://player.tscn" id="2_ojcjo"]
+[ext_resource type="PackedScene" uid="uid://cmuq767qvubdb" path="res://maze.tscn" id="3_a85j8"]
+[ext_resource type="Script" path="res://maze.gd" id="4_754an"]
+
+[sub_resource type="FontFile" id="FontFile_p04h6"]
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/17/0/ascent = 0.0
+cache/0/17/0/descent = 0.0
+cache/0/17/0/underline_position = 0.0
+cache/0/17/0/underline_thickness = 0.0
+cache/0/17/0/scale = 1.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_jcebw"]
+font = SubResource("FontFile_p04h6")
+font_size = 17
+
+[node name="Level1" type="Node2D"]
+script = ExtResource("1_5o3mm")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -10
+
+[node name="Background" type="TextureRect" parent="CanvasLayer"]
+z_index = -100
+offset_right = 1248.0
+offset_bottom = 675.0
+texture = ExtResource("1_ru5s6")
+stretch_mode = 1
+
+[node name="Maze" parent="." instance=ExtResource("3_a85j8")]
+position = Vector2(361, 302)
+script = ExtResource("4_754an")
+
+[node name="Player" parent="." instance=ExtResource("2_ojcjo")]
+position = Vector2(442, 350)
+
+[node name="EndLabel" type="Label" parent="."]
+offset_left = 598.0
+offset_top = 147.0
+offset_right = 644.0
+offset_bottom = 170.0
+text = "Finish"
+label_settings = SubResource("LabelSettings_jcebw")
+
+[node name="StartLabel" type="Label" parent="."]
+offset_left = 414.0
+offset_top = 318.0
+offset_right = 454.0
+offset_bottom = 341.0
+text = "Start"
+label_settings = SubResource("LabelSettings_jcebw")
+
+[connection signal="body_exited" from="Maze" to="." method="_on_maze_body_exited"]
